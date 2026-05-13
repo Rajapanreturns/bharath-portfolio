@@ -214,7 +214,7 @@ export default function PortfolioWebsite() {
             </p>
             <h1 className="text-4xl font-bold tracking-tight text-white md:text-6xl">Bharath Rajeev</h1>
             <p className="mt-5 text-xl leading-8 text-slate-300">
-              I build practical systems across data analytics, Android development, embedded systems, IoT, and sustainable engineering.
+              I build practical systems across data analytics, Java development, embedded systems, IoT, and sustainable engineering.
             </p>
 
             <div className="mt-8 flex flex-wrap gap-3">
