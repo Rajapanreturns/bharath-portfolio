@@ -62,7 +62,7 @@ const PROJECTS = [
 const SKILLS = [
   {
     group: "Programming",
-    items: ["Python", "Java", "C", "SQL", "OOP", "Data Structures & Algorithms", "Git", "CSS", "HTML"]
+    items: ["Python", "R", "Java", "C", "SQL", "OOP", "Data Structures & Algorithms", "Git", "CSS", "HTML", "LLM API Integration"]
   },
   {
     group: "Data & ML",
@@ -72,9 +72,8 @@ const SKILLS = [
       "pandas",
       "NumPy",
       "matplotlib",
-      "Linear Regression",
-      "Logistic Regression",
-      "Random Forests"
+      "Statistical Analysis"
+      "R"
     ]
   },
   {
