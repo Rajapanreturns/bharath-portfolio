@@ -72,7 +72,7 @@ const SKILLS = [
       "pandas",
       "NumPy",
       "matplotlib",
-      "Statistical Analysis"
+      "Statistical Analysis",
       "R"]
   },
   {
