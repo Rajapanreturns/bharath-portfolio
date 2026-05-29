@@ -73,8 +73,7 @@ const SKILLS = [
       "NumPy",
       "matplotlib",
       "Statistical Analysis"
-      "R"
-    ]
+      "R"]
   },
   {
     group: "Mobile Development",
