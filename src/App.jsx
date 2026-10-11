@@ -1,5 +1,3 @@
-import React from "react";
-
 const PROJECTS = [
   {
     title: "E-commerce Sales and Customer Analysis",
@@ -115,19 +113,19 @@ runPortfolioTests();
 function SectionTitle({ title, subtitle }) {
   return (
     <div>
-      <h2 className="text-3xl font-bold tracking-tight text-white">{title}</h2>
-      {subtitle ? <p className="mt-3 max-w-2xl text-slate-400">{subtitle}</p> : null}
+      <h2 className="text-3xl font-bold tracking-tight text-ink">{title}</h2>
+      {subtitle ? <p className="mt-3 max-w-2xl text-muted">{subtitle}</p> : null}
     </div>
   );
 }
 
 function Card({ children, className = "" }) {
-  return <div className={`rounded-2xl border border-white/10 bg-white/[0.04] shadow-xl ${className}`}>{children}</div>;
+  return <div className={`rounded-2xl border border-line bg-surface shadow-[0_8px_28px_rgba(48,40,32,0.05)] ${className}`}>{children}</div>;
 }
 
 function TextIcon({ children }) {
   return (
-    <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-xs font-bold text-slate-100">
+    <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sand-deep text-xs font-bold text-ink">
       {children}
     </span>
   );
@@ -135,12 +133,12 @@ function TextIcon({ children }) {
 
 function ButtonLink({ href, children, variant = "primary", external = false }) {
   const baseClasses =
-    "inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-sky-300";
+    "inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-sand";
 
   const variantClasses = {
-    primary: "bg-sky-400 text-slate-950 hover:bg-sky-300",
-    secondary: "bg-white text-slate-950 hover:bg-slate-200",
-    outline: "border border-white/20 bg-white/5 text-white hover:bg-white/10"
+    primary: "bg-accent text-white hover:bg-accent-hover",
+    secondary: "bg-surface text-ink hover:bg-surface-hover",
+    outline: "border border-line bg-surface text-ink hover:bg-surface-hover"
   };
 
   return (
@@ -157,29 +155,29 @@ function ButtonLink({ href, children, variant = "primary", external = false }) {
 
 function ProjectCard({ project }) {
   return (
-    <Card className="h-full p-6 transition hover:bg-white/[0.07]">
+    <Card className="h-full p-6 transition hover:bg-surface-hover">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-sm font-medium text-sky-300">{project.category}</p>
-          <h3 className="mt-2 text-xl font-semibold text-white">{project.title}</h3>
+          <p className="text-sm font-medium text-accent">{project.category}</p>
+          <h3 className="mt-2 text-xl font-semibold text-ink">{project.title}</h3>
         </div>
         <TextIcon>{project.icon}</TextIcon>
       </div>
 
-      <p className="mt-4 text-sm leading-6 text-slate-300">{project.description}</p>
+      <p className="mt-4 text-sm leading-6 text-body">{project.description}</p>
 
       <div className="mt-4 flex flex-wrap gap-2">
         {project.tools.map((tool) => (
-          <span key={tool} className="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">
+          <span key={tool} className="rounded-full bg-sand-deep px-3 py-1 text-xs text-body">
             {tool}
           </span>
         ))}
       </div>
 
-      <ul className="mt-5 space-y-2 text-sm text-slate-300">
+      <ul className="mt-5 space-y-2 text-sm text-body">
         {project.highlights.map((item) => (
           <li key={item} className="flex gap-2">
-            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-300" />
+            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
             <span>{item}</span>
           </li>
         ))}
@@ -190,7 +188,7 @@ function ProjectCard({ project }) {
           href={project.link}
           target="_blank"
           rel="noreferrer"
-          className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-sky-300 hover:text-sky-200"
+          className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-accent-hover"
         >
           View GitHub repository <span aria-hidden="true">↗</span>
         </a>
@@ -201,17 +199,17 @@ function ProjectCard({ project }) {
 
 export default function PortfolioWebsite() {
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100">
-      <section className="relative overflow-hidden border-b border-white/10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.25),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(34,197,94,0.18),transparent_35%)]" />
+    <main className="min-h-screen bg-sand text-ink">
+      <section className="relative overflow-hidden border-b border-line">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(173,73,51,0.12),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(194,156,105,0.16),transparent_35%)]" />
 
         <div className="relative mx-auto flex max-w-6xl flex-col gap-10 px-6 py-20 md:py-28">
           <div className="max-w-3xl">
-            <p className="mb-4 inline-flex rounded-full border border-sky-400/30 bg-sky-400/10 px-4 py-2 text-sm text-sky-200">
+            <p className="mb-4 inline-flex rounded-full border border-accent/25 bg-accent/10 px-4 py-2 text-sm text-accent">
               Computer Science and Design Undergraduate • SUTD
             </p>
-            <h1 className="text-4xl font-bold tracking-tight text-white md:text-6xl">Bharath Rajeev</h1>
-            <p className="mt-5 text-xl leading-8 text-slate-300">
+            <h1 className="text-4xl font-bold tracking-tight text-ink md:text-6xl">Bharath Rajeev</h1>
+            <p className="mt-5 text-xl leading-8 text-body">
               I build practical systems across data analytics, Java development, embedded systems, IoT, and sustainable engineering.
             </p>
 
@@ -226,25 +224,53 @@ export default function PortfolioWebsite() {
           <div className="grid gap-4 md:grid-cols-3">
             <Card className="p-5">
               <TextIcon>🎓</TextIcon>
-              <h3 className="mt-3 font-semibold text-white">Education</h3>
-              <p className="mt-2 text-sm text-slate-300">B.Eng. Computer Science and Design, SUTD</p>
-              <p className="mt-1 text-sm text-slate-400">CGPA: 4.5 / 5.0</p>
+              <h3 className="mt-3 font-semibold text-ink">Education</h3>
+              <p className="mt-2 text-sm text-body">B.Eng. Computer Science and Design, SUTD</p>
+              <p className="mt-1 text-sm text-muted">CGPA: 4.5 / 5.0</p>
             </Card>
 
             <Card className="p-5">
-              <TextIcon>TA</TextIcon>
-              <h3 className="mt-3 font-semibold text-white">Current Role</h3>
-              <p className="mt-2 text-sm text-slate-300">Teaching Assistant, Data Driven World</p>
-              <p className="mt-1 text-sm text-slate-400">Python, data analysis, visualization, ML</p>
+              <TextIcon>AI</TextIcon>
+              <h3 className="mt-3 font-semibold text-ink">Current Role</h3>
+              <p className="mt-2 text-sm font-semibold text-body">Data &amp; AI Engineer Intern</p>
+              <p className="mt-1 text-sm text-body">UIC Asian Computer Services — Singapore</p>
+              <p className="mt-1 text-sm text-muted">Aug 2026 – Present</p>
             </Card>
 
             <Card className="p-5">
               <TextIcon>CS</TextIcon>
-              <h3 className="mt-3 font-semibold text-white">Focus Areas</h3>
-              <p className="mt-2 text-sm text-slate-300">Data analytics, software, Android, embedded systems, IoT</p>
+              <h3 className="mt-3 font-semibold text-ink">Focus Areas</h3>
+              <p className="mt-2 text-sm text-body">Data analytics, software, Android, embedded systems, IoT</p>
             </Card>
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <SectionTitle title="Professional Experience" />
+        <Card className="mt-8 p-6 md:p-8">
+          <p className="text-sm font-medium text-accent">UIC Asian Computer Services — Singapore</p>
+          <h3 className="mt-2 text-xl font-semibold text-ink">Data &amp; AI Engineer Intern</h3>
+          <p className="mt-2 text-sm text-muted">Aug 2026 – Present</p>
+          <ul className="mt-5 list-disc space-y-3 pl-5 text-sm leading-6 text-body marker:text-accent">
+            <li>
+              Worked with Python (Pandas, NumPy), SQL, and Microsoft Fabric to prepare, clean, transform, and validate HR
+              datasets for data analytics and AI-driven applications.
+            </li>
+            <li>
+              Supported data pipeline development and management, leveraging Azure Blob Storage, vector databases, and text
+              embeddings for efficient data processing and retrieval.
+            </li>
+            <li>
+              Contributed to NLP intent classification, prompt engineering, and Retrieval-Augmented Generation (RAG)
+              workflows using Azure OpenAI to support intelligent HR applications.
+            </li>
+            <li>
+              Utilised Azure DevOps for sprint planning, task tracking, version control, and collaboration with engineers
+              throughout the development lifecycle.
+            </li>
+          </ul>
+        </Card>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-16">
@@ -260,7 +286,7 @@ export default function PortfolioWebsite() {
         </div>
       </section>
 
-      <section className="border-y border-white/10 bg-white/[0.03]">
+      <section className="border-y border-line bg-sand-deep/60">
         <div className="mx-auto max-w-6xl px-6 py-16">
           <SectionTitle
             title="Technical Skills"
@@ -269,11 +295,11 @@ export default function PortfolioWebsite() {
 
           <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
             {SKILLS.map((skillGroup) => (
-              <Card key={skillGroup.group} className="bg-slate-900/80 p-5">
-                <h3 className="font-semibold text-white">{skillGroup.group}</h3>
+              <Card key={skillGroup.group} className="bg-surface p-5">
+                <h3 className="font-semibold text-ink">{skillGroup.group}</h3>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {skillGroup.items.map((item) => (
-                    <span key={item} className="rounded-full bg-white/10 px-3 py-1 text-xs text-slate-300">
+                    <span key={item} className="rounded-full bg-sand-deep px-3 py-1 text-xs text-body">
                       {item}
                     </span>
                   ))}
@@ -288,16 +314,16 @@ export default function PortfolioWebsite() {
         <div className="grid gap-8 md:grid-cols-[1fr_1.2fr]">
           <div>
             <SectionTitle title="Teaching & Mentoring" />
-            <p className="mt-3 text-slate-400">
+            <p className="mt-3 text-muted">
               As a Teaching Assistant for Data Driven World, I support students in Python programming, data analysis, visualization,
               introductory machine learning, and project development.
             </p>
           </div>
 
           <Card className="p-6">
-            <h3 className="text-xl font-semibold text-white">Teaching Assistant — Data Driven World</h3>
-            <p className="mt-2 text-sm text-slate-400">SUTD • May 2026 – Present</p>
-            <ul className="mt-5 space-y-3 text-sm text-slate-300">
+            <h3 className="text-xl font-semibold text-ink">Teaching Assistant — Data Driven World</h3>
+            <p className="mt-2 text-sm text-muted">SUTD • May 2026 – Present</p>
+            <ul className="mt-5 space-y-3 text-sm text-body">
               <li>Support Term 4 students in Python programming, debugging, data analysis, visualization, and introductory machine learning.</li>
               <li>Provide project consultation, helping student teams refine ideas and troubleshoot implementation issues.</li>
               <li>Conduct project check-offs to assess students’ understanding of concepts and methods applied in their projects.</li>
@@ -306,15 +332,15 @@ export default function PortfolioWebsite() {
         </div>
       </section>
 
-      <footer className="border-t border-white/10 px-6 py-10">
-        <div className="mx-auto flex max-w-6xl flex-col justify-between gap-4 text-sm text-slate-400 md:flex-row">
+      <footer className="border-t border-line px-6 py-10">
+        <div className="mx-auto flex max-w-6xl flex-col justify-between gap-4 text-sm text-muted md:flex-row">
           <p>© 2026 Bharath Rajeev. Built as a technical portfolio.</p>
           <div className="flex flex-wrap gap-4">
-            <a className="hover:text-white" href="mailto:rajeevbharath2@gmail.com">
+            <a className="hover:text-accent" href="mailto:rajeevbharath2@gmail.com">
               Email
             </a>
             <a
-              className="hover:text-white"
+              className="hover:text-accent"
               href="https://www.linkedin.com/in/bharath-rajeev-9a5b40311/"
               target="_blank"
               rel="noreferrer"

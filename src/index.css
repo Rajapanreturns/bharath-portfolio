@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+@theme {
+  --color-sand: #f5efe6;
+  --color-sand-deep: #eae0d3;
+  --color-surface: #fffaf4;
+  --color-surface-hover: #f8f0e5;
+  --color-ink: #302820;
+  --color-body: #54473b;
+  --color-muted: #716253;
+  --color-accent: #ad4933;
+  --color-accent-hover: #8e3826;
+  --color-line: #d9cbbb;
+}
+
+:root {
+  color-scheme: light;
+  background: var(--color-sand);
+  color: var(--color-ink);
+}
+
+::selection {
+  background: #ad493333;
+  color: var(--color-ink);
+}
