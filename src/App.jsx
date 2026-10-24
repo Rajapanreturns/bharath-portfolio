@@ -1,355 +1,946 @@
-const PROJECTS = [
+import { useEffect, useRef, useState } from "react";
+import { PROJECTS, SKILLS } from "./data";
+import "./App.css";
+import "./midnight.css";
+import CommandMenu from "./CommandMenu";
+import AssessmentFlow from "./AssessmentFlow";
+
+const EMAIL = "mailto:rajeevbharath2@gmail.com";
+const LINKEDIN = "https://www.linkedin.com/in/bharath-rajeev-9a5b40311/";
+const GITHUB = "https://github.com/Rajapanreturns";
+const CONNECTIONS = [
   {
-    title: "DAS — Dyslexia Error Pattern Analyzer",
-    category: "AI-Assisted Web Development",
-    icon: "DAS",
-    link: "",
-    tools: ["Node.js", "Express.js", "EJS", "JavaScript", "MySQL", "OpenAI API", "Jest"],
-    description:
-      "Team-built educational web application developed in collaboration with the Dyslexia Association of Singapore to analyze written assessments, identify literacy error patterns, and support educators with AI-generated summaries.",
-    highlights: [
-      "Developed the educator-facing module to review, edit, save, and approve AI-generated assessment analyses.",
-      "Implemented RESTful endpoints, validation, and transactional MySQL operations for review and grading workflows.",
-      "Integrated Railway-hosted MySQL storage and wrote Jest unit tests for analysis review and approval."
-    ]
+    name: "Software",
+    short: "Build",
+    number: "01",
+    description: "Software, Data & AI",
+    detail:
+      "Building AI-powered applications, connecting data pipelines, and turning data into useful tools.",
+    icon: "code",
   },
   {
-    title: "StayOnTrail — Android Productivity App",
-    category: "Mobile App Development",
-    icon: "APP",
-    link: "https://github.com/Rajapanreturns/StayOnTrail",
-    tools: ["Java", "Android Studio", "SQLite", "DeepSeek API"],
-    description:
-      "Forest-themed Android task management app with timers, calendar/list views, streaks, priority logic, and AI-assisted task creation.",
-    highlights: [
-      "Used SQLite to store task data such as title, deadline, priority, recurrence, and category.",
-      "Integrated DeepSeek API to convert natural-language prompts into structured tasks.",
-      "Applied Adapter, Template Method, and Observer patterns in Android development."
-    ]
+    name: "Data & AI",
+    short: "Understand",
+    number: "02",
+    description: "Data pipelines & AI applications",
+    detail:
+      "Internship work preparing data with Python and SQL and supporting AI search and retrieval workflows.",
+    icon: "data",
   },
   {
-    title: "Survivor — FPGA-Based LED Matrix Arcade Game",
-    category: "Digital Design",
-    icon: "CPU",
-    link: "",
-    tools: ["FSM", "Datapath", "LED Matrix", "7-Segment Displays"],
-    description:
-      "Top-down survival shooter built on a 16×16 LED matrix with custom FSM, datapath design, hardware I/O, and CAD enclosure.",
-    highlights: [
-      "Designed FSM logic for movement, shooting, collision, enemy spawning, win, and game-over states.",
-      "Created datapath with registers, RAM/ROM access, ALU operations, RNG, and LED driver integration.",
-      "Integrated buttons, LED matrix, and 7-segment displays for gameplay and feedback."
-    ]
+    name: "Hardware",
+    short: "Connect",
+    number: "03",
+    description: "Embedded systems & electronics",
+    detail:
+      "Working with digital logic, sensors, and physical systems to bring software into the real world.",
+    icon: "chip",
   },
-  {
-    title: "Solar-Powered Food Dehydrator",
-    category: "Sustainable Engineering",
-    icon: "SUN",
-    link: "https://github.com/Rajapanreturns/Heat-Exchanger",
-    tools: ["Solar PV", "Battery Sizing", "Thermal Testing", "Sensors"],
-    description:
-      "Low-cost solar dehydrator designed to reduce post-harvest spoilage, recognized as Best Project for Designing Energy Systems.",
-    highlights: [
-      "Calculated energy budget using panel sizing, battery Wh, and peak sun hours.",
-      "Integrated solar charge control and battery-backed operation.",
-      "Tested temperature, humidity, airflow, and drying performance."
-    ]
-  }
 ];
 
-const SKILLS = [
-  {
-    group: "Programming",
-    items: ["Python", "R", "Java", "C", "SQL", "OOP", "Data Structures & Algorithms", "Git", "CSS", "HTML", "LLM API Integration"]
-  },
-  {
-    group: "Data & ML",
-    items: [
-      "MySQL",
-      "Power BI",
-      "pandas",
-      "NumPy",
-      "matplotlib",
-      "Statistical Analysis",
-      "R"]
-  },
-  {
-    group: "Mobile Development",
-    items: ["Android Studio", "SQLite", "REST APIs", "RecyclerView", "Android Lifecycle", "JSON"]
-  },
-  {
-    group: "Embedded / IoT",
-    items: ["ESP32", "Raspberry Pi", "Sensors", "IoT Telemetry", "Hardware I/O", "Solar Charge Controllers"]
-  }
-];
-
-function runPortfolioTests() {
-  console.assert(PROJECTS.length === 4, "Expected exactly 4 projects after removing Terban Village and Cannon.");
-  console.assert(
-    PROJECTS.every((project) => project.title && project.category && project.description),
-    "Every project should have a title, category, and description."
-  );
-  console.assert(
-    PROJECTS.every((project) => Array.isArray(project.tools) && project.tools.length > 0),
-    "Every project should list at least one tool."
-  );
-  console.assert(
-    PROJECTS.every((project) => Array.isArray(project.highlights) && project.highlights.length >= 3),
-    "Every project should have at least three highlights."
-  );
-  console.assert(
-    PROJECTS.find((project) => project.title.includes("Survivor"))?.link === "",
-    "Survivor should not show a project link."
-  );
-  console.assert(SKILLS.length >= 4, "Expected at least four skill groups.");
-  console.assert(
-    SKILLS.every((skillGroup) => Array.isArray(skillGroup.items) && skillGroup.items.length > 0),
-    "Every skill group should contain skills."
+function Arrow({ diagonal = false }) {
+  return (
+    <svg
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d={diagonal ? "M5 19 19 5M5 5h14v14" : "M4 12h15m-6-6 6 6-6 6"}
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
-
-runPortfolioTests();
-
-function SectionTitle({ title, subtitle }) {
+function Icon({ type }) {
   return (
-    <div>
-      <h2 className="text-3xl font-bold tracking-tight text-ink">{title}</h2>
-      {subtitle ? <p className="mt-3 max-w-2xl text-muted">{subtitle}</p> : null}
+    <svg
+      width="28"
+      height="28"
+      viewBox="0 0 32 32"
+      fill="none"
+      aria-hidden="true"
+    >
+      <g
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        {type === "code" ? (
+          <>
+            <path d="m10 10-6 6 6 6m12-12 6 6-6 6M18 6l-4 20" />
+          </>
+        ) : type === "data" ? (
+          <>
+            <path d="M5 26h23M8 21v-6m8 6V6m8 15V11" />
+            <circle cx="8" cy="12" r="2" />
+            <circle cx="16" cy="4" r="2" />
+            <circle cx="24" cy="8" r="2" />
+          </>
+        ) : (
+          <>
+            <rect x="9" y="9" width="14" height="14" rx="2" />
+            <path d="M13 2v7m6-7v7m-6 14v7m6-7v7M2 13h7m-7 6h7m14-6h7m-7 6h7" />
+            <rect x="13" y="13" width="6" height="6" />
+          </>
+        )}
+      </g>
+    </svg>
+  );
+}
+function ConnectionWidget() {
+  const [active, setActive] = useState(0);
+  const item = CONNECTIONS[active];
+  return (
+    <div className={`connection-widget active-${active}`}>
+      <div className="widget-top mono">
+        <span>
+          <span className="status-dot" /> SYSTEM MAP / INTERACTIVE
+        </span>
+        <span>FIG. 01</span>
+      </div>
+      <div className="constellation">
+        <svg
+          className="connection-lines"
+          viewBox="0 0 480 320"
+          fill="none"
+          aria-hidden="true"
+        >
+          <circle
+            cx="240"
+            cy="154"
+            r="104"
+            stroke="currentColor"
+            strokeDasharray="2 7"
+          />
+          <ellipse
+            cx="240"
+            cy="154"
+            rx="192"
+            ry="72"
+            transform="rotate(-27 240 154)"
+            stroke="currentColor"
+          />
+          <ellipse
+            cx="240"
+            cy="154"
+            rx="142"
+            ry="105"
+            transform="rotate(28 240 154)"
+            stroke="currentColor"
+            strokeDasharray="4 7"
+          />
+          <path
+            className="signal-path"
+            d="M82 88 240 154 390 90M240 154l50 118"
+            stroke="currentColor"
+          />
+          <circle
+            className="orbit-dot"
+            cx="147"
+            cy="233"
+            r="4"
+            fill="currentColor"
+          />
+          <path
+            d="M52 256h12m-6-6v12M409 222h12m-6-6v12"
+            stroke="currentColor"
+          />
+        </svg>
+        <div className="core-mark" aria-hidden="true">
+          <span>
+            b<span className="core-period">.</span>
+          </span>
+        </div>
+        {CONNECTIONS.map((connection, i) => (
+          <button
+            key={connection.name}
+            className={`node node-${i} ${active === i ? "selected" : ""}`}
+            onClick={() => setActive(i)}
+            aria-pressed={active === i}
+            aria-label={`Explore ${connection.name}`}
+          >
+            <Icon type={connection.icon} />
+            <span>{connection.name}</span>
+          </button>
+        ))}
+        <span className="diagram-note mono">software ↔ data ↔ hardware</span>
+      </div>
+      <div className="connection-caption" aria-live="polite" aria-atomic="true">
+        <div className="caption-index mono">
+          {item.number} / {item.short}
+        </div>
+        <h3>{item.description}</h3>
+        <p>{item.detail}</p>
+      </div>
+      <div className="widget-bottom mono">
+        <span>↖ TAP A NODE TO EXPLORE</span>
+        <span>SELECT A DISCIPLINE</span>
+      </div>
+    </div>
+  );
+}
+function AssessmentPreview() {
+  return (
+    <div
+      className="assessment-preview"
+      aria-label="Illustrative educator review interface with fictional sample content"
+    >
+      <div className="preview-label mono">
+        <span>DAS · Literacy assessment tool</span>
+        <span>01 / SOFTWARE</span>
+      </div>
+      <div className="review-window">
+        <div className="window-top">
+          <span className="window-dots">
+            <i />
+            <i />
+            <i />
+          </span>
+          <span>Assessment review</span>
+          <span>✧</span>
+        </div>
+        <div className="review-inner">
+          <div className="review-sidebar">
+            <strong>
+              das<span> / </span>
+            </strong>
+            <span className="sidebar-active">Overview</span>
+            <span>Assessments</span>
+            <span>Review</span>
+            <span className="sidebar-bottom">Educator workspace</span>
+          </div>
+          <div className="review-content">
+            <div className="review-heading">
+              <span className="mono">WRITING SAMPLE</span>
+              <span className="sample-tag">Sample</span>
+            </div>
+            <h4>Every pattern tells a story.</h4>
+            <p className="sample-writing">
+              The little <mark>brid</mark> flew
+              <br />
+              over the <mark>hous</mark>.
+            </p>
+            <div className="insight-row">
+              <span className="insight-icon">✧</span>
+              <div>
+                <strong>Patterns to explore</strong>
+                <p>Letter order · Omitted letters</p>
+              </div>
+            </div>
+            <div className="review-action">
+              <span>Ready for educator review</span>
+              <span>Review analysis ↗</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span className="visual-footnote mono">
+        ILLUSTRATIVE INTERFACE · FICTIONAL SAMPLE
+      </span>
+    </div>
+  );
+}
+function MobilePreview() {
+  return (
+    <div className="mobile-preview">
+      <div className="preview-label mono">
+        <span>StayOnTrail · Android task planner</span>
+        <span>02 / MOBILE</span>
+      </div>
+      <div className="phone-scene">
+        <span className="plant-ring ring-one" />
+        <span className="plant-ring ring-two" />
+        <span className="plant-label mono">
+          make room
+          <br />
+          to grow.
+        </span>
+        <div className="phone phone-back">
+          <img
+            src="/images/stayontrail-home.png"
+            alt="StayOnTrail app showing today's tasks"
+            width="276"
+            height="604"
+            loading="lazy"
+          />
+        </div>
+        <div className="phone phone-front">
+          <img
+            src="/images/stayontrail-forest.png"
+            alt="StayOnTrail streak view with a growing forest"
+            width="269"
+            height="601"
+            loading="lazy"
+          />
+        </div>
+        <span className="little-star" aria-hidden="true">
+          ✳
+        </span>
+      </div>
+      <span className="visual-footnote mono">
+        ACTUAL APP SCREENS · STAYONTRAIL
+      </span>
+    </div>
+  );
+}
+function HardwarePreview() {
+  return (
+    <div className="hardware-preview">
+      <div className="preview-label mono">
+        <span>Survivor · FPGA arcade game</span>
+        <span>03 / HARDWARE</span>
+      </div>
+      <div className="hardware-drawing" aria-hidden="true">
+        <svg viewBox="0 0 430 230" fill="none">
+          <g stroke="currentColor" strokeWidth="1.3">
+            <path d="M35 65h50v50h63M35 170h70v-35h43M280 115h57V65h60M280 135h76v35h41" />
+            <circle cx="35" cy="65" r="4" />
+            <circle cx="35" cy="170" r="4" />
+            <circle cx="397" cy="65" r="4" />
+            <circle cx="397" cy="170" r="4" />
+            <rect x="146" y="48" width="138" height="138" rx="9" />
+            <rect x="159" y="61" width="112" height="112" rx="3" />
+            {Array.from({ length: 8 }, (_, i) => (
+              <g key={i}>
+                <path
+                  d={`M${166 + i * 14} 40v8m0 138v8M138 ${68 + i * 14}h8m138 0h8`}
+                />
+              </g>
+            ))}
+          </g>
+          <text
+            x="215"
+            y="110"
+            textAnchor="middle"
+            fill="currentColor"
+            fontSize="30"
+            fontFamily="monospace"
+          >
+            FPGA
+          </text>
+          <text
+            x="215"
+            y="139"
+            textAnchor="middle"
+            fill="currentColor"
+            fontSize="11"
+            fontFamily="monospace"
+            letterSpacing="3"
+          >
+            SURVIVOR
+          </text>
+          <g fill="currentColor" fontFamily="monospace" fontSize="10">
+            <text x="39" y="48">
+              INPUT
+            </text>
+            <text x="340" y="48">
+              OUTPUT
+            </text>
+            <text x="141" y="222">
+              FSM → DATAPATH → PLAY
+            </text>
+          </g>
+        </svg>
+      </div>
+      <span className="visual-footnote mono">
+        DIGITAL DESIGN · CONCEPT DIAGRAM
+      </span>
+    </div>
+  );
+}
+function SolarPreview() {
+  return (
+    <div className="solar-preview">
+      <div className="preview-label mono">
+        <span>Solar-powered food dehydrator</span>
+        <span>04 / ENERGY</span>
+      </div>
+      <div className="solar-scene">
+        <span className="sun-drawing" aria-hidden="true">
+          ☼
+        </span>
+        <img
+          src="/images/solar-collector.png"
+          alt="Solar collector design from the project presentation, showing heat absorption and airflow"
+          width="308"
+          height="219"
+          loading="lazy"
+        />
+        <span className="solar-note mono">
+          sunlight in.
+          <br />
+          possibility out.
+        </span>
+      </div>
+      <span className="visual-footnote mono">
+        PROJECT DESIGN · SOLAR COLLECTOR
+      </span>
+    </div>
+  );
+}
+const PREVIEWS = [
+  AssessmentPreview,
+  MobilePreview,
+  HardwarePreview,
+  SolarPreview,
+];
+const CARD_TITLES = [
+  "DAS — Dyslexia Assessment Tool",
+  "StayOnTrail — Android Task Planner",
+  "Survivor — FPGA Arcade Game",
+  "Solar-Powered Food Dehydrator",
+];
+const CARD_DESCRIPTIONS = [
+  "A web app that helps educators identify literacy error patterns and review AI-generated assessment summaries.",
+  "An Android app for planning tasks, running focus timers, and tracking streaks—with AI-assisted task creation.",
+  "A survival shooter built on an FPGA, with a 16×16 LED display, physical controls, and custom game logic.",
+  "A solar-powered food-drying system designed to reduce spoilage, with battery-backed operation and thermal testing.",
+];
+
+function ProjectDialog({ projectIndex, onClose }) {
+  const ref = useRef(null);
+  const project = projectIndex !== null ? PROJECTS[projectIndex] : null;
+  useEffect(() => {
+    if (projectIndex === null) return;
+    const dialog = ref.current;
+    dialog.showModal();
+    const oldOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = oldOverflow;
+      if (dialog.open) dialog.close();
+    };
+  }, [projectIndex]);
+  return (
+    <dialog
+      ref={ref}
+      className="project-dialog"
+      onClose={onClose}
+      onClick={(e) => {
+        if (e.target === e.currentTarget) e.currentTarget.close();
+      }}
+      aria-labelledby="project-dialog-title"
+    >
+      {project && (
+        <div className="dialog-content">
+          <button
+            className="close-dialog"
+            onClick={() => ref.current.close()}
+            aria-label="Close project details"
+            autoFocus
+          >
+            ×
+          </button>
+          <span className="eyebrow">PROJECT NOTES / 0{projectIndex + 1}</span>
+          <h2 id="project-dialog-title">{project.title}</h2>
+          <p className="dialog-description">{project.description}</p>
+          {projectIndex === 3 && (
+            <span className="award">
+              ✳ Best Project · Designing Energy Systems
+            </span>
+          )}
+          <h3>Selected contributions & technical work</h3>
+          <ul>
+            {project.highlights.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <h3>Built with</h3>
+          <div className="tags">
+            {project.tools.map((tool) => (
+              <span key={tool}>{tool}</span>
+            ))}
+          </div>
+          {project.link ? (
+            <a
+              className="button button-dark"
+              href={project.link}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Explore the repository <Arrow diagonal />
+            </a>
+          ) : (
+            <p className="project-note">
+              A closer look at the work, from problem to implementation.
+            </p>
+          )}
+        </div>
+      )}
+    </dialog>
+  );
+}
+function GrowthWidget() {
+  const [growth, setGrowth] = useState(0);
+  const captions = [
+    "Every idea starts somewhere.",
+    "A little attention goes a long way.",
+    "Good things take a little tending.",
+    "Keep making room to grow.",
+  ];
+  return (
+    <div className={`growth-widget growth-${growth}`}>
+      <div className="growth-top mono">
+        <span>PIXEL TERRARIUM</span>
+        <span>0{growth + 1} / 04</span>
+      </div>
+      <div className="growth-art" aria-hidden="true">
+        <svg viewBox="0 0 220 150" fill="none">
+          <path d="M70 133h80" stroke="#24463f" strokeWidth="2" />
+          <path d="M86 100h48v25h-8v8H94v-8h-8z" fill="#bd843d" />
+          <path d="M82 98h56v9H82z" fill="#f7b955" />
+          <path className="stem" d="M107 100V40h6v60z" fill="#54e3b4" />
+          <path
+            className="leaf leaf-one"
+            d="M107 78H91V70H83V54h16v8h8z"
+            fill="#36ba9a"
+          />
+          <path
+            className="leaf leaf-two"
+            d="M113 65h16v-8h8V41h-16v8h-8z"
+            fill="#71f6c4"
+          />
+          <path
+            className="leaf leaf-three"
+            d="M107 45H91v-8h-8V21h16v8h8z"
+            fill="#40cbb2"
+          />
+          <g className="growth-spark" stroke="#f7b955" strokeWidth="2">
+            <path d="M156 53h12m-6-6v12M64 30h8m-4-4v8" />
+          </g>
+        </svg>
+      </div>
+      <p aria-live="polite">{captions[growth]}</p>
+      <button
+        className="text-button"
+        onClick={() => setGrowth((growth + 1) % 4)}
+      >
+        {growth === 3 ? "Plant another idea" : "Give it a little care"}{" "}
+        <span aria-hidden="true">{growth === 3 ? "↻" : "+"}</span>
+      </button>
     </div>
   );
 }
 
-function Card({ children, className = "" }) {
-  return <div className={`rounded-2xl border border-line bg-surface shadow-[0_8px_28px_rgba(48,40,32,0.05)] ${className}`}>{children}</div>;
-}
-
-function TextIcon({ children }) {
-  return (
-    <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sand-deep text-xs font-bold text-ink">
-      {children}
-    </span>
-  );
-}
-
-function ButtonLink({ href, children, variant = "primary", external = false }) {
-  const baseClasses =
-    "inline-flex items-center justify-center gap-2 rounded-2xl px-5 py-3 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-sand";
-
-  const variantClasses = {
-    primary: "bg-accent text-white hover:bg-accent-hover",
-    secondary: "bg-surface text-ink hover:bg-surface-hover",
-    outline: "border border-line bg-surface text-ink hover:bg-surface-hover"
-  };
-
-  return (
-    <a
-      href={href}
-      className={`${baseClasses} ${variantClasses[variant]}`}
-      target={external ? "_blank" : undefined}
-      rel={external ? "noreferrer" : undefined}
-    >
-      {children}
-    </a>
-  );
-}
-
-function ProjectCard({ project }) {
-  return (
-    <Card className="h-full p-6 transition hover:bg-surface-hover">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-sm font-medium text-accent">{project.category}</p>
-          <h3 className="mt-2 text-xl font-semibold text-ink">{project.title}</h3>
-        </div>
-        <TextIcon>{project.icon}</TextIcon>
-      </div>
-
-      <p className="mt-4 text-sm leading-6 text-body">{project.description}</p>
-
-      <div className="mt-4 flex flex-wrap gap-2">
-        {project.tools.map((tool) => (
-          <span key={tool} className="rounded-full bg-sand-deep px-3 py-1 text-xs text-body">
-            {tool}
-          </span>
-        ))}
-      </div>
-
-      <ul className="mt-5 space-y-2 text-sm text-body">
-        {project.highlights.map((item) => (
-          <li key={item} className="flex gap-2">
-            <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-
-      {project.link ? (
-        <a
-          href={project.link}
-          target="_blank"
-          rel="noreferrer"
-          className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-accent hover:text-accent-hover"
-        >
-          View GitHub repository <span aria-hidden="true">↗</span>
-        </a>
-      ) : null}
-    </Card>
-  );
-}
-
 export default function PortfolioWebsite() {
+  const [projectIndex, setProjectIndex] = useState(null);
+  const [commandOpen, setCommandOpen] = useState(false);
+  useEffect(() => {
+    function shortcut(event) {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        if (!document.querySelector(".project-dialog[open]"))
+          setCommandOpen((value) => !value);
+      }
+    }
+    window.addEventListener("keydown", shortcut);
+    return () => window.removeEventListener("keydown", shortcut);
+  }, []);
+  const [motion, setMotion] = useState(
+    () => !window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+  const [copied, setCopied] = useState(false);
+  const copyTimeout = useRef(null);
+  useEffect(() => () => clearTimeout(copyTimeout.current), []);
+  async function copyEmail() {
+    try {
+      await navigator.clipboard.writeText("rajeevbharath2@gmail.com");
+      setCopied(true);
+      clearTimeout(copyTimeout.current);
+      copyTimeout.current = setTimeout(() => setCopied(false), 2200);
+    } catch {
+      window.location.href = EMAIL;
+    }
+  }
   return (
-    <main className="min-h-screen bg-sand text-ink">
-      <section className="relative overflow-hidden border-b border-line">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(173,73,51,0.12),transparent_35%),radial-gradient(circle_at_bottom_right,rgba(194,156,105,0.16),transparent_35%)]" />
-
-        <div className="relative mx-auto flex max-w-6xl flex-col gap-10 px-6 py-20 md:py-28">
-          <div className="max-w-3xl">
-            <p className="mb-4 inline-flex rounded-full border border-accent/25 bg-accent/10 px-4 py-2 text-sm text-accent">
-              Computer Science and Design Undergraduate • SUTD
+    <div className={`portfolio ${motion ? "motion-on" : "motion-off"}`}>
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
+      <header className="site-header">
+        <div className="nav-shell">
+          <a
+            className="wordmark"
+            href="#"
+            aria-label="Bharath Rajeev, back to top"
+          >
+            br<span>_</span>
+          </a>
+          <nav aria-label="Main navigation">
+            <a href="#work">Work</a>
+            <a href="#experience">Experience</a>
+            <a href="#about">About</a>
+          </nav>
+          <button
+            className="command-trigger"
+            onClick={() => setCommandOpen(true)}
+            aria-label="Open command menu"
+          >
+            <span aria-hidden="true">⌘</span> Quick access <kbd>⌘ / Ctrl K</kbd>
+          </button>
+          <a className="nav-contact" href="#contact">
+            Let’s talk <Arrow diagonal />
+          </a>
+        </div>
+      </header>
+      <main id="main">
+        <section className="hero section-shell" aria-labelledby="hero-heading">
+          <div className="hero-copy">
+            <div className="eyebrow">
+              <span className="status-dot" /> BHARATH RAJEEV / SINGAPORE
+            </div>
+            <h1 id="hero-heading">
+              From code
+              <br />
+              to <em>real systems.</em>
+            </h1>
+            <p className="hero-intro">
+              I’m Bharath. I build AI-powered applications, work with data, and
+              turn engineering ideas into things you can use.
             </p>
-            <h1 className="text-4xl font-bold tracking-tight text-ink md:text-6xl">Bharath Rajeev</h1>
-            <p className="mt-5 text-xl leading-8 text-body">
-              I build practical systems across data analytics, Java development, embedded systems, IoT, and sustainable engineering.
+            <p className="hero-detail">
+              Computer Science & Design at SUTD.
+              <br />
+              Exploring the space between AI, data, software, and hardware.
             </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href="mailto:rajeevbharath2@gmail.com">Email Me</ButtonLink>
-              <ButtonLink href="https://www.linkedin.com/in/bharath-rajeev-9a5b40311/" variant="outline" external>
-                LinkedIn
-              </ButtonLink>
+            <div className="hero-actions">
+              <a className="button button-dark" href="#work">
+                Explore my work <Arrow />
+              </a>
+              <a
+                className="text-link"
+                href={GITHUB}
+                target="_blank"
+                rel="noreferrer"
+              >
+                GitHub <Arrow diagonal />
+              </a>
             </div>
           </div>
-
-          <div className="grid gap-4 md:grid-cols-3">
-            <Card className="p-5">
-              <TextIcon>🎓</TextIcon>
-              <h3 className="mt-3 font-semibold text-ink">Education</h3>
-              <p className="mt-2 text-sm text-body">B.Eng. Computer Science and Design, SUTD</p>
-              <p className="mt-1 text-sm text-muted">CGPA: 4.5 / 5.0</p>
-            </Card>
-
-            <Card className="p-5">
-              <TextIcon>AI</TextIcon>
-              <h3 className="mt-3 font-semibold text-ink">Current Role</h3>
-              <p className="mt-2 text-sm font-semibold text-body">Data &amp; AI Engineer Intern</p>
-              <p className="mt-1 text-sm text-body">UIC Asian Computer Services — Singapore</p>
-              <p className="mt-1 text-sm text-muted">Aug 2026 – Present</p>
-            </Card>
-
-            <Card className="p-5">
-              <TextIcon>CS</TextIcon>
-              <h3 className="mt-3 font-semibold text-ink">Focus Areas</h3>
-              <p className="mt-2 text-sm text-body">Data analytics, software, Android, embedded systems, IoT</p>
-            </Card>
+          <ConnectionWidget />
+          <div className="hero-bottom mono">
+            <span>
+              <span className="status-dot" /> CURRENTLY: DATA & AI ENGINEER
+              INTERN @ UIC
+            </span>
+            <a href="#work">
+              SCROLL TO EXPLORE <span>↓</span>
+            </a>
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <SectionTitle title="Professional Experience" />
-        <Card className="mt-8 p-6 md:p-8">
-          <p className="text-sm font-medium text-accent">UIC Asian Computer Services — Singapore</p>
-          <h3 className="mt-2 text-xl font-semibold text-ink">Data &amp; AI Engineer Intern</h3>
-          <p className="mt-2 text-sm text-muted">Aug 2026 – Present</p>
-          <ul className="mt-5 list-disc space-y-3 pl-5 text-sm leading-6 text-body marker:text-accent">
-            <li>
-              Worked with Python (Pandas, NumPy), SQL, and Microsoft Fabric to prepare, clean, transform, and validate HR
-              datasets for data analytics and AI-driven applications.
-            </li>
-            <li>
-              Supported data pipeline development and management, leveraging Azure Blob Storage, vector databases, and text
-              embeddings for efficient data processing and retrieval.
-            </li>
-            <li>
-              Contributed to NLP intent classification, prompt engineering, and Retrieval-Augmented Generation (RAG)
-              workflows using Azure OpenAI to support intelligent HR applications.
-            </li>
-            <li>
-              Utilised Azure DevOps for sprint planning, task tracking, version control, and collaboration with engineers
-              throughout the development lifecycle.
-            </li>
-          </ul>
-        </Card>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <SectionTitle
-          title="Featured Projects"
-          subtitle="A focused selection of software, data, and hardware projects showing design, development, testing, and documentation."
-        />
-
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
-          {PROJECTS.map((project) => (
-            <ProjectCard key={project.title} project={project} />
-          ))}
-        </div>
-      </section>
-
-      <section className="border-y border-line bg-sand-deep/60">
-        <div className="mx-auto max-w-6xl px-6 py-16">
-          <SectionTitle
-            title="Technical Skills"
-            subtitle="Skills grouped by the roles I am targeting: data analytics, software development, mobile development, and embedded/IoT."
-          />
-
-          <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-            {SKILLS.map((skillGroup) => (
-              <Card key={skillGroup.group} className="bg-surface p-5">
-                <h3 className="font-semibold text-ink">{skillGroup.group}</h3>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {skillGroup.items.map((item) => (
-                    <span key={item} className="rounded-full bg-sand-deep px-3 py-1 text-xs text-body">
-                      {item}
+        </section>
+        <section
+          id="work"
+          className="work-section section-shell"
+          aria-labelledby="work-heading"
+        >
+          <div className="section-heading">
+            <div>
+              <span className="eyebrow">01 / SELECTED WORK</span>
+              <h2 id="work-heading">
+                Selected <em>projects.</em>
+              </h2>
+            </div>
+            <p>04 projects / software, mobile, hardware & energy</p>
+          </div>
+          <div className="projects-grid">
+            {PROJECTS.map((project, i) => {
+              const Preview = PREVIEWS[i];
+              return (
+                <article
+                  className={`project-card project-${i}`}
+                  key={project.title}
+                >
+                  <button
+                    className="project-visual-button"
+                    onClick={() => setProjectIndex(i)}
+                    aria-label={`Explore ${project.title}`}
+                  >
+                    <Preview />
+                    <span className="visual-open" aria-hidden="true">
+                      <Arrow diagonal />
                     </span>
-                  ))}
+                  </button>
+                  <div className="project-info">
+                    <div className="project-meta mono">
+                      <span>{project.category}</span>
+                      {i === 3 && (
+                        <span className="award-inline">✳ BEST PROJECT</span>
+                      )}
+                    </div>
+                    <h3>
+                      <button onClick={() => setProjectIndex(i)}>
+                        {CARD_TITLES[i]} <Arrow diagonal />
+                      </button>
+                    </h3>
+                    <p>{CARD_DESCRIPTIONS[i]}</p>
+                    {i === 0 && <AssessmentFlow />}
+                    <div className="project-info-bottom">
+                      <span className="project-short-title">
+                        {
+                          [
+                            "Node.js · MySQL · OpenAI API",
+                            "Java · SQLite · DeepSeek API",
+                            "FSM · Datapath · LED matrix",
+                            "Solar PV · Sensors · Thermal testing",
+                          ][i]
+                        }
+                      </span>
+                      <div className="project-actions">
+                        <button
+                          className="text-button"
+                          onClick={() => setProjectIndex(i)}
+                        >
+                          Project notes <span aria-hidden="true">+</span>
+                        </button>
+                        {project.link && (
+                          <a
+                            className="text-button project-repo-link"
+                            href={project.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`GitHub repository for ${CARD_TITLES[i]}`}
+                          >
+                            GitHub repo <Arrow diagonal />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+        <section
+          id="experience"
+          className="experience-section"
+          aria-labelledby="experience-heading"
+        >
+          <div className="section-shell experience-layout">
+            <div>
+              <span className="eyebrow">02 / ALONG THE WAY</span>
+              <h2 id="experience-heading">
+                Experience &amp;
+                <br />
+                <em>toolkit.</em>
+              </h2>
+              <p className="section-description">
+                Building with teams, learning from people, and putting the
+                pieces together.
+              </p>
+              <a
+                className="text-link"
+                href={LINKEDIN}
+                target="_blank"
+                rel="noreferrer"
+              >
+                More on LinkedIn <Arrow diagonal />
+              </a>
+            </div>
+            <div className="timeline">
+              <article className="timeline-item">
+                <div className="timeline-date mono">
+                  AUG 2026 — PRESENT <span className="status-dot" />
                 </div>
-              </Card>
-            ))}
+                <h3>Data & AI Engineer Intern</h3>
+                <p className="timeline-place">
+                  UIC Asian Computer Services · Singapore
+                </p>
+                <p>
+                  Preparing data and supporting AI-driven applications: from
+                  Python and SQL pipelines to embeddings, retrieval, and NLP
+                  workflows.
+                </p>
+                <div className="tags">
+                  <span>Python & SQL</span>
+                  <span>Microsoft Fabric</span>
+                  <span>Azure OpenAI</span>
+                  <span>RAG</span>
+                </div>
+                <details>
+                  <summary>
+                    A closer look <span>+</span>
+                  </summary>
+                  <ul>
+                    <li>
+                      Prepare, clean, transform, and validate HR datasets using
+                      Pandas, NumPy, SQL, and Microsoft Fabric.
+                    </li>
+                    <li>
+                      Support pipelines with Azure Blob Storage, vector
+                      databases, and text embeddings.
+                    </li>
+                    <li>
+                      Contribute to intent classification, prompt engineering,
+                      and retrieval workflows.
+                    </li>
+                    <li>
+                      Collaborate through Azure DevOps, sprint planning, and
+                      version control.
+                    </li>
+                  </ul>
+                </details>
+              </article>
+              <article className="timeline-item">
+                <div className="timeline-date mono">MAY 2026 — AUG 2026</div>
+                <h3>Teaching Assistant</h3>
+                <p className="timeline-place">Data Driven World · SUTD</p>
+                <p>
+                  Helped students find their footing in Python, data analysis,
+                  visualization, and introductory machine learning through
+                  debugging, project consultations, and check-offs.
+                </p>
+                <div className="tags">
+                  <span>Python</span>
+                  <span>Data analysis</span>
+                  <span>Project mentoring</span>
+                </div>
+              </article>
+            </div>
+            <div className="toolbox">
+              <span className="eyebrow">THINGS I BUILD WITH</span>
+              {SKILLS.map((group) => (
+                <details key={group.group}>
+                  <summary>
+                    {group.group}
+                    <span>+</span>
+                  </summary>
+                  <div className="tags">
+                    {group.items.map((item) => (
+                      <span key={item}>{item}</span>
+                    ))}
+                  </div>
+                </details>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <div className="grid gap-8 md:grid-cols-[1fr_1.2fr]">
-          <div>
-            <SectionTitle title="Teaching & Mentoring" />
-            <p className="mt-3 text-muted">
-              As a Teaching Assistant for Data Driven World, I support students in Python programming, data analysis, visualization,
-              introductory machine learning, and project development.
+        </section>
+        <section
+          id="about"
+          className="about-section section-shell"
+          aria-labelledby="about-heading"
+        >
+          <div className="about-main">
+            <span className="eyebrow">03 / THE PERSON BEHIND THE PROJECTS</span>
+            <h2 id="about-heading">
+              A bit <em>about me.</em>
+            </h2>
+            <p>
+              I’m Bharath, a Computer Science and Design undergraduate at the
+              Singapore University of Technology and Design.
             </p>
+            <p>
+              My work spans AI-powered applications, data engineering, mobile
+              apps, and physical systems.
+              I’m interested in how those disciplines meet—and what we can build
+              when they do.
+            </p>
+            <div className="education-line">
+              <span className="education-mark" aria-hidden="true">
+                ↗
+              </span>
+              <div>
+                <strong>B.Eng. Computer Science and Design</strong>
+                <span>SUTD · CGPA 4.5 / 5.0</span>
+              </div>
+            </div>
           </div>
-
-          <Card className="p-6">
-            <h3 className="text-xl font-semibold text-ink">Teaching Assistant — Data Driven World</h3>
-            <p className="mt-2 text-sm text-muted">SUTD • May 2026 – Present</p>
-            <ul className="mt-5 space-y-3 text-sm text-body">
-              <li>Support Term 4 students in Python programming, debugging, data analysis, visualization, and introductory machine learning.</li>
-              <li>Provide project consultation, helping student teams refine ideas and troubleshoot implementation issues.</li>
-              <li>Conduct project check-offs to assess students’ understanding of concepts and methods applied in their projects.</li>
-            </ul>
-          </Card>
-        </div>
-      </section>
-
-      <footer className="border-t border-line px-6 py-10">
-        <div className="mx-auto flex max-w-6xl flex-col justify-between gap-4 text-sm text-muted md:flex-row">
-          <p>© 2026 Bharath Rajeev. Built as a technical portfolio.</p>
-          <div className="flex flex-wrap gap-4">
-            <a className="hover:text-accent" href="mailto:rajeevbharath2@gmail.com">
-              Email
-            </a>
-            <a
-              className="hover:text-accent"
-              href="https://www.linkedin.com/in/bharath-rajeev-9a5b40311/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              LinkedIn
-            </a>
+          <div className="about-aside">
+            <GrowthWidget />
           </div>
-        </div>
+        </section>
+        <section
+          id="contact"
+          className="contact-section"
+          aria-labelledby="contact-heading"
+        >
+          <div className="section-shell">
+            <div className="contact-top">
+              <span className="eyebrow">04 / WHAT’S NEXT?</span>
+              <span className="contact-spark" aria-hidden="true">
+                ✳
+              </span>
+            </div>
+            <h2 id="contact-heading">
+              Let’s build
+              <br />
+              <em>what’s next.</em>
+            </h2>
+            <div className="contact-bottom">
+              <p>
+                A project, an opportunity, or an interesting idea?
+                <br />
+                I’d love to hear about it.
+              </p>
+              <a className="button button-dark" href={EMAIL}>
+                Say hello <Arrow diagonal />
+              </a>
+            </div>
+            <div className="contact-links">
+              <a href={EMAIL}>rajeevbharath2@gmail.com</a>
+              <button
+                className="copy-button"
+                onClick={copyEmail}
+                aria-label="Copy email address"
+              >
+                <span aria-live="polite">
+                  {copied ? "Copied ✓" : "Copy ↗"}
+                </span>
+              </button>
+              <span className="contact-link-spacer" />
+              <a href={LINKEDIN} target="_blank" rel="noreferrer">
+                LinkedIn ↗
+              </a>
+              <a href={GITHUB} target="_blank" rel="noreferrer">
+                GitHub ↗
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+      <footer className="site-footer section-shell">
+        <a className="wordmark" href="#" aria-label="Back to top">
+          br<span>_</span>
+        </a>
+        <span>
+          © {new Date().getFullYear()} Bharath Rajeev · Made with curiosity.
+        </span>
+        <button
+          className="motion-toggle"
+          onClick={() => setMotion(!motion)}
+          aria-pressed={motion}
+        >
+          Motion {motion ? "on" : "off"}{" "}
+          <span aria-hidden="true">{motion ? "◉" : "○"}</span>
+        </button>
+        <a href="#" className="back-top" aria-label="Back to top">
+          ↑
+        </a>
       </footer>
-    </main>
+      {copied && (
+        <div className="copy-toast" role="status">
+          Email address copied <span aria-hidden="true">✓</span>
+        </div>
+      )}
+      <CommandMenu
+        open={commandOpen}
+        onClose={() => setCommandOpen(false)}
+        onProject={setProjectIndex}
+        onCopy={copyEmail}
+        onMotion={() => setMotion((value) => !value)}
+        motion={motion}
+      />
+      <ProjectDialog
+        projectIndex={projectIndex}
+        onClose={() => setProjectIndex(null)}
+      />
+    </div>
   );
 }
