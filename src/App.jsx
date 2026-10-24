@@ -1,16 +1,16 @@
 const PROJECTS = [
   {
-    title: "E-commerce Sales and Customer Analysis",
-    category: "Data Analytics",
-    icon: "DB",
-    link: "https://github.com/Rajapanreturns/ecommerce-sales-customer-analysis",
-    tools: ["MySQL", "Python", "pandas", "Power BI"],
+    title: "DAS — Dyslexia Error Pattern Analyzer",
+    category: "AI-Assisted Web Development",
+    icon: "DAS",
+    link: "",
+    tools: ["Node.js", "Express.js", "EJS", "JavaScript", "MySQL", "OpenAI API", "Jest"],
     description:
-      "End-to-end analytics project analyzing retail sales, profitability, customer behavior, product trends, and regional performance.",
+      "Team-built educational web application developed in collaboration with the Dyslexia Association of Singapore to analyze written assessments, identify literacy error patterns, and support educators with AI-generated summaries.",
     highlights: [
-      "Cleaned and transformed raw sales data using Python and pandas.",
-      "Designed SQL queries and reusable views for KPI reporting.",
-      "Built Power BI dashboards for sales trends, profit margin, and customer segments."
+      "Developed the educator-facing module to review, edit, save, and approve AI-generated assessment analyses.",
+      "Implemented RESTful endpoints, validation, and transactional MySQL operations for review and grading workflows.",
+      "Integrated Railway-hosted MySQL storage and wrote Jest unit tests for analysis review and approval."
     ]
   },
   {
