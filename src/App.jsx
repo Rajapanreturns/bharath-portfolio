@@ -446,6 +446,7 @@ function ProjectDialog({ projectIndex, onClose }) {
               ✳ Best Project · Designing Energy Systems
             </span>
           )}
+          {projectIndex === 0 && <AssessmentFlow />}
           <h3>Selected contributions & technical work</h3>
           <ul>
             {project.highlights.map((item) => (
@@ -680,7 +681,6 @@ export default function PortfolioWebsite() {
                       </button>
                     </h3>
                     <p>{CARD_DESCRIPTIONS[i]}</p>
-                    {i === 0 && <AssessmentFlow />}
                     <div className="project-info-bottom">
                       <span className="project-short-title">
                         {

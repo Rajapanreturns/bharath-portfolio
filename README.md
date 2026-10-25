@@ -1,6 +1,6 @@
 # Bharath Rajeev — Portfolio
 
-A responsive React + Vite portfolio styled as Midnight Lab: graphite panels, cyan and amber accents, a compact project gallery, an interactive discipline diagram, an illustrative DAS workflow, accessible project dialogs, a keyboard command menu, and a pixel terrarium. Survivor is presented as a static project; there is no playable game.
+A responsive React + Vite portfolio styled as Midnight Lab: graphite panels, cyan and amber accents, a balanced two-column project gallery, an interactive discipline diagram, an illustrative DAS workflow in its project dialog, accessible project dialogs, a keyboard command menu, and a pixel terrarium. Survivor is presented as a static project; there is no playable game.
 
 ## Run locally
 

@@ -287,7 +287,7 @@ h2 em {
   font-size: 11px;
 }
 .projects-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
   align-items: stretch;
 }
@@ -310,19 +310,9 @@ h2 em {
 .project-3 {
   padding-top: 0;
 }
-.project-0 {
-  grid-column: 1/-1;
-  display: grid;
-  grid-template-columns: 1.05fr 1fr;
-  min-height: 330px;
-}
 .project-visual-button {
   border-bottom: 1px solid var(--line);
   flex-shrink: 0;
-}
-.project-0 .project-visual-button {
-  border-bottom: 0;
-  border-right: 1px solid var(--line);
 }
 .project-info {
   padding: 19px;
@@ -391,20 +381,6 @@ h2 em {
   white-space: nowrap;
   color: #70e4de;
 }
-.project-0 .project-info {
-  padding: 23px 25px;
-}
-.project-0 .project-info h3 {
-  font-size: 26px;
-}
-.project-0 .project-info > p {
-  font-size: 13px;
-  line-height: 1.7;
-  margin-bottom: 12px;
-}
-.project-0 .project-info-bottom {
-  margin-top: 14px;
-}
 .visual-open {
   background: #0a1d27e6;
   color: #54e4e4;
@@ -444,8 +420,8 @@ h2 em {
   letter-spacing: 0.6px;
 }
 .assessment-preview {
-  height: 100%;
-  min-height: 330px;
+  height: 280px;
+  min-height: 0;
   background: radial-gradient(ellipse at 55% 70%, #174552, #0c1c28 75%);
   color: #bdd5df;
 }
@@ -554,7 +530,7 @@ h2 em {
   padding: 5px 7px;
 }
 .mobile-preview {
-  height: 233px;
+  height: 280px;
   background: radial-gradient(ellipse at bottom, #173e3b, #102222);
   color: #92bbb0;
 }
@@ -599,7 +575,7 @@ h2 em {
   color: #64c6ae;
 }
 .hardware-preview {
-  height: 233px;
+  height: 280px;
   background: #131d31;
   color: #90b6e0;
 }
@@ -610,7 +586,7 @@ h2 em {
   max-height: 175px;
 }
 .solar-preview {
-  height: 233px;
+  height: 280px;
   background: #2b2419;
   color: #e2c597;
 }
@@ -1180,12 +1156,6 @@ h2 em {
   .project-info h3 {
     font-size: 19px;
   }
-  .project-0 .project-info {
-    padding: 19px;
-  }
-  .project-0 .project-info h3 {
-    font-size: 24px;
-  }
   .preview-label > span:first-child {
     font-size: 10px;
   }
@@ -1411,28 +1381,6 @@ h2 em {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 15px;
   }
-  .project-0 {
-    display: flex;
-    grid-column: 1/-1;
-    min-height: 0;
-  }
-  .project-0 .project-visual-button {
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .project-0 .assessment-preview {
-    height: 280px;
-    min-height: 280px;
-  }
-  .project-0 .project-info {
-    padding: 19px;
-  }
-  .project-0 .project-info h3 {
-    font-size: 25px;
-  }
-  .project-0 .project-info > p {
-    font-size: 13px;
-  }
   .review-window {
     left: 9%;
     right: 9%;
@@ -1453,13 +1401,6 @@ h2 em {
   .sample-writing {
     font-size: 14px;
   }
-  .project-0 .project-info-bottom {
-    margin-top: 14px;
-    flex-wrap: nowrap;
-  }
-  .project-0 .project-info-bottom .project-short-title {
-    font-size: 10px;
-  }
   .assessment-flow > p {
     min-height: 35px;
     font-size: 12px;
@@ -1476,10 +1417,11 @@ h2 em {
     bottom: 8px;
     left: 10px;
   }
+  .assessment-preview,
   .mobile-preview,
   .hardware-preview,
   .solar-preview {
-    height: 215px;
+    height: 260px;
   }
   .phone {
     width: 86px;
@@ -1523,19 +1465,6 @@ h2 em {
   }
   .project-meta {
     font-size: 7px;
-  }
-  .project-3 {
-    grid-column: 1/-1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
-  .project-3 .project-visual-button {
-    border-right: 1px solid var(--line);
-    border-bottom: 0;
-  }
-  .project-3 .solar-preview {
-    height: 100%;
-    min-height: 235px;
   }
   .project-3 .project-meta {
     flex-direction: column;
@@ -1799,19 +1728,6 @@ h2 em {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  .project-0,
-  .project-3 {
-    grid-column: auto;
-    display: flex;
-  }
-  .project-3 .project-visual-button {
-    border-right: 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .project-0 .assessment-preview {
-    height: 260px;
-    min-height: 260px;
-  }
   .review-window {
     left: 6%;
     right: -6%;
@@ -1873,12 +1789,6 @@ h2 em {
   }
   .project-3 .project-meta {
     flex-direction: row;
-  }
-  .mobile-preview,
-  .hardware-preview,
-  .project-3 .solar-preview {
-    height: 240px;
-    min-height: 240px;
   }
   .phone {
     width: 104px;
@@ -2041,4 +1951,11 @@ h2 em {
 .copy-toast span {
   margin-left: 18px;
   color: #54e4e4;
+}
+
+/* Stack project cards once two columns become too narrow to read. */
+@media (max-width: 640px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
 }
