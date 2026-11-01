@@ -34,6 +34,7 @@ export default function CommandMenu({
     ...[
       ["Selected work", "work"],
       ["Experience", "experience"],
+      ["Toolkit", "skills"],
       ["About Bharath", "about"],
       ["Contact", "contact"],
     ].map(([label, id]) => ({

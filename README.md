@@ -1,53 +1,54 @@
 # Bharath Rajeev — Portfolio
 
-A responsive React + Vite portfolio styled as Midnight Lab: graphite panels, cyan and amber accents, a balanced two-column project gallery, an interactive discipline diagram, an illustrative DAS workflow in its project dialog, accessible project dialogs, a keyboard command menu, and a pixel terrarium. Survivor is presented as a static project; there is no playable game.
+A React + Vite portfolio built around the approved Neon Arcade world. An original illustrated map connects four projects, while branching pixel paths lead into experience, toolkit, education, and contact. Text and controls are HTML; the illustration is decorative.
 
 ## Run locally
 
-Use a Node.js version supported by Vite 8, then run:
+Use a Node.js version supported by Vite 8:
 
 ```sh
 npm ci
 npm run dev
 ```
 
-For a production build:
-
 ```sh
+npm run lint
 npm run build
 npm run preview
 ```
 
-The production output is `dist/`. The Vercel project uses its Vite preset, `npm run build`, and the `dist` output directory.
+Production output is `dist/`. The existing Vercel project uses the Vite preset, `npm run build`, and `dist`.
 
 ## Editing
 
-- `src/data.js`: project descriptions, contributions, and skills, preserved from the original portfolio.
-- `src/App.jsx`: page sections, illustration components, and interactive widgets.
-- `src/App.css`: foundational component layout and responsive styles.
-- `src/midnight.css`: Midnight Lab theme, compact layout, and responsive refinements.
-- `src/CommandMenu.jsx`: searchable command menu (Command+K / Control+K).
-- `src/AssessmentFlow.jsx`: illustrative Analyze / Review / Approve workflow.
-- `src/index.css`: foundational styles.
-- `public/images/`: project images described below.
+- `src/data.js`: preserved project descriptions, contributions, technologies, and skills.
+- `src/ArcadeWorld.jsx`: illustrated project selector, keyboard controls, and section routes.
+- `src/App.jsx`: navigation, experience, toolkit, education, contact, garden, and project dialogs.
+- `src/arcade-world.css`: approved arcade world composition and responsive layout.
+- `src/neon-portfolio.css`: full portfolio sections, dialogs, navigation, and responsive styles.
+- `src/index.css` and `src/fonts.css`: shared reset and self-hosted fonts.
+- `src/CommandMenu.jsx`: searchable Command+K / Control+K menu.
+- `src/AssessmentFlow.jsx`: explicitly illustrative Analyze / Review / Approve workflow.
 
-The interactive diagram and illustrative workflow use buttons with selected states. The command menu supports search, arrow-key navigation, Enter selection, and Escape dismissal. Project notes open in native modal dialogs with focus containment and Escape dismissal. Animations respect the system reduced-motion preference and can also be disabled with the footer's Motion control. The email Copy button uses the Clipboard API, with a mailto fallback when unavailable. No new runtime dependencies were added.
+Earlier theme files are retained but are not imported by the current app.
 
-## Visual asset provenance
+## Interactions and accessibility
 
-- `stayontrail-home.png` and `stayontrail-forest.png`: actual app images extracted from the public [StayOnTrail poster](https://github.com/Rajapanreturns/StayOnTrail/blob/main/Stay%20On%20Trail%20Poster.pdf).
-- `solar-collector.png`: collector design extracted from the public [Heat-Exchanger presentation](https://github.com/Rajapanreturns/Heat-Exchanger/blob/main/Solar%20Oven/PPT.pdf).
-- The DAS card is an original illustrative interface with fictional example content, explicitly labeled on the card. It is not an actual application screenshot or assessment result.
-- The Survivor card is an original static concept diagram, not a screenshot or game simulation.
-- The interactive diagram, plant, and favicon are local SVG/CSS artwork.
+The project map, cartridge buttons, and previous/next controls select the same four projects. Left/right arrows switch projects only while focus is inside the cabinet; keyboard updates are immediate. Project dialogs use native modal focus containment and Escape dismissal. Survivor is a static hardware project with no playable game and no repository link.
+
+The command menu supports search, arrow-key navigation, Enter, and Escape. Section navigation uses normal anchors, with a compact menu on phones. Email copy falls back to opening an email draft if clipboard access fails. The pixel garden progresses through four stages. Motion respects the system reduced-motion preference and the footer toggle.
+
+## Assets
+
+- `public/images/neon-world.webp`: original AI-generated pixel landscape from the approved Neon remix prototype; optimized to approximately 381 KB. Decorative artwork, not a project screenshot.
+- `public/fonts/`: locally served DM Sans and Pixelify Sans font files, carried over from the approved prototype.
+- `stayontrail-home.png` and `stayontrail-forest.png`: actual app images from the public [StayOnTrail poster](https://github.com/Rajapanreturns/StayOnTrail/blob/main/Stay%20On%20Trail%20Poster.pdf).
+- `solar-collector.png`: collector design from the public [Heat-Exchanger presentation](https://github.com/Rajapanreturns/Heat-Exchanger/blob/main/Solar%20Oven/PPT.pdf).
+- The DAS workflow is an original illustrative interface with fictional example content, not an actual assessment result.
+- The Survivor diagram, pixel garden, route paths, and favicon are local SVG/CSS artwork.
 
 ## Verification
 
-- Production build completed successfully.
-- Midnight Lab browser checks covered desktop and 320 / 390 / 768 pixel layouts. No horizontal page overflow was observed at the measured narrow widths.
-- All four project dialogs were opened and dismissed; the initial focus is placed on the close button.
-- The original topic selector and plant progression were preserved. Midnight Lab checks covered workflow-stage selection; command search, empty results, automatic search focus, arrow-key navigation, Enter selection, section jumps, project opening, and Escape dismissal.
-- Command-menu email copy displayed its confirmation toast. Command-menu Motion off disabled the animated signal path.
-- All three project images loaded successfully.
+No new runtime dependencies were added. Lint and production build pass.
 
-Dependencies are unchanged from the original repository. The existing dependency audit is separate from this visual redesign.
+The production preview was checked in the browser at 320, 390, 768 pixels and desktop width. No horizontal page overflow, broken project images, console warnings, or console errors were observed. Checks covered section anchors, mobile menu dismissal, command search and Enter selection, project dialogs and Escape focus restoration, the DAS review workflow, original StayOnTrail and solar images, the pixel garden, and the motion toggle. Survivor has no repository link or playable game.
