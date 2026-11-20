@@ -846,18 +846,14 @@
   color: var(--light);
   margin-top: 30px;
 }
-.dialog-content > .solid-link {
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
   margin-top: 32px;
 }
 .dialog-content .tags {
   margin-top: 17px;
-}
-.project-award {
-  padding: 12px 15px;
-  color: #f4c7e2;
-  background: #39243b;
-  font-size: 14px;
-  margin-top: 25px;
 }
 .assessment-flow {
   margin-top: 28px;
@@ -923,23 +919,21 @@
   border-radius: 18px;
 }
 .project-screens figcaption,
-.solar-proof figcaption {
+.atlas-proof figcaption {
   font-size: 12px;
   color: #c0b1c8;
   text-align: center;
   margin-top: 19px;
   line-height: 1.5;
 }
-.solar-proof {
+.atlas-proof {
   padding: 25px;
   background: #171322;
   margin: 25px 0 0;
 }
-.solar-proof img {
-  margin: auto;
-  width: 370px;
+.atlas-proof img {
+  width: 100%;
   height: auto;
-  max-width: 100%;
 }
 .hardware-proof {
   color: #c597e5;
@@ -1733,7 +1727,7 @@
     border-radius: 12px;
   }
   .project-screens figcaption,
-  .solar-proof figcaption {
+  .atlas-proof figcaption {
     font-size: 11px;
   }
   .hardware-proof {
@@ -1742,12 +1736,8 @@
   .hardware-proof p {
     font-size: 11px;
   }
-  .solar-proof {
+  .atlas-proof {
     padding: 17px;
-  }
-  .project-award {
-    font-size: 12px;
-    padding: 11px 12px;
   }
   .command-panel {
     padding: 17px;
@@ -1782,7 +1772,7 @@
   .command-empty {
     font-size: 13px;
   }
-  .dialog-content > .solid-link {
+  .project-actions {
     margin-top: 27px;
   }
 }

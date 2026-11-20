@@ -46,18 +46,19 @@ const OPTIONS = [
     tags: ["FPGA", "Digital logic", "LED matrix"],
   },
   {
-    name: "Solar Dehydrator",
-    purpose: "Solar-powered food drying",
+    name: "Fire Record Atlas",
+    purpose: "NASA Space Apps Challenge",
+    mapLabel: "Fire Atlas",
     headline: (
       <>
-        Food drying,
+        25 years of fire detections,
         <br />
-        powered by the sun.
+        seen from space.
       </>
     ),
     summary:
-      "A low-cost solar dehydrator exploring heat transfer, airflow and battery-backed operation to reduce post-harvest spoilage.",
-    tags: ["Heat transfer", "Solar", "Hardware"],
+      "Explore burning seasons across nine regions and see how changing satellite sensors affects the fire record.",
+    tags: ["Geospatial data", "Satellite imagery", "Data visualization"],
   },
 ];
 function Arrow({ previous = false }) {
@@ -148,7 +149,7 @@ export default function ArcadeWorld({ onProject, motion }) {
               width="1536"
               height="1024"
               fetchPriority="high"
-              alt="An illustrated arcade world: a reading library, forest trail, electronics workshop and solar greenhouse connected by pink paths."
+              alt="An illustrated arcade world with a reading library, forest trail, electronics workshop and satellite observatory connected by pink paths."
             />
             {OPTIONS.map((item, index) => (
               <button
@@ -159,7 +160,7 @@ export default function ArcadeWorld({ onProject, motion }) {
                 aria-label={`Select ${item.name}, ${item.purpose}`}
                 onClick={(event) => select(index, event.detail !== 0)}
               >
-                {index === 3 ? "Solar" : item.name}
+                {item.mapLabel ?? item.name}
               </button>
             ))}
             <span className="art-caption">Illustrated project world</span>

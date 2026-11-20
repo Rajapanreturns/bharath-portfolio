@@ -50,17 +50,18 @@ export const PROJECTS = [
     ],
   },
   {
-    title: "Solar-Powered Food Dehydrator",
-    category: "Sustainable Engineering",
-    icon: "SUN",
-    link: "https://github.com/Rajapanreturns/Heat-Exchanger",
-    tools: ["Solar PV", "Battery Sizing", "Thermal Testing", "Sensors"],
+    title: "Fire Record Atlas — NASA Space Apps Challenge",
+    category: "Geospatial Data & Visualization",
+    icon: "MAP",
+    link: "https://github.com/Rajapanreturns/fire-record-atlas",
+    demo: "https://rajapanreturns.github.io/fire-record-atlas/",
+    tools: ["Python", "DuckDB", "JavaScript", "D3.js", "NASA FIRMS"],
     description:
-      "Low-cost solar dehydrator designed to reduce post-harvest spoilage, recognized as Best Project for Designing Energy Systems.",
+      "Built for the 2026 NASA Space Apps Challenge, Fire Record Atlas explores 25 years of satellite fire detections and shows when data from different sensors can be compared.",
     highlights: [
-      "Calculated energy budget using panel sizing, battery Wh, and peak sun hours.",
-      "Integrated solar charge control and battery-backed operation.",
-      "Tested temperature, humidity, airflow, and drying performance.",
+      "Processed NASA FIRMS archives into monthly daytime hotspot counts with Python and DuckDB.",
+      "Built an interactive globe and burning calendars for nine study regions, with a side-by-side view of estimated and measured counts.",
+      "Converted VIIRS counts to the Aqua MODIS scale. In a five-region NOAA-20 test, 200 of 215 held-out monthly Aqua counts fell within the 90% prediction intervals.",
     ],
   },
 ];

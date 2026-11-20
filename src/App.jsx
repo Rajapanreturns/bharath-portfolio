@@ -9,12 +9,12 @@ import "./neon-portfolio.css";
 const EMAIL = "rajeevbharath2@gmail.com";
 const LINKEDIN = "https://www.linkedin.com/in/bharath-rajeev-9a5b40311/";
 const GITHUB = "https://github.com/Rajapanreturns";
-const NAMES = ["DAS", "StayOnTrail", "Survivor", "Solar Dehydrator"];
+const NAMES = ["DAS", "StayOnTrail", "Survivor", "Fire Record Atlas"];
 const PURPOSES = [
   "AI-assisted dyslexia assessment review",
   "Android task planning with AI",
   "An FPGA arcade game",
-  "Solar-powered food drying",
+  "Satellite fire data & harmonization",
 ];
 const DESTINATIONS = [
   ["Projects", "work"],
@@ -193,22 +193,17 @@ function ProjectDialog({ projectIndex, onClose }) {
           )}
           {projectIndex === 2 && <HardwareDiagram />}
           {projectIndex === 3 && (
-            <>
-              <p className="project-award">
-                Best Project · Designing Energy Systems
-              </p>
-              <figure className="solar-proof">
-                <img
-                  src="/images/solar-collector.png"
-                  alt="Solar collector design from the project presentation, showing heat absorption and airflow"
-                  width="308"
-                  height="219"
-                />
-                <figcaption>
-                  Solar collector design from the project presentation
-                </figcaption>
-              </figure>
-            </>
+            <figure className="atlas-proof">
+              <img
+                src="/images/fire-record-atlas.png"
+                alt="Fire Record Atlas home screen showing a globe of March fire detections, nine study regions and a seasonality chart"
+                width="1440"
+                height="900"
+              />
+              <figcaption>
+                Fire Record Atlas · Global hotspots and seasonal patterns
+              </figcaption>
+            </figure>
           )}
           <h3>Contributions & technical work</h3>
           <ul className="contribution-list">
@@ -223,14 +218,26 @@ function ProjectDialog({ projectIndex, onClose }) {
             ))}
           </div>
           {project.link && (
-            <a
-              className="solid-link"
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View GitHub repository <Arrow diagonal />
-            </a>
+            <div className="project-actions">
+              <a
+                className="solid-link"
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View GitHub repository <Arrow diagonal />
+              </a>
+              {project.demo && (
+                <a
+                  className="solid-link"
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Open live atlas <Arrow diagonal />
+                </a>
+              )}
+            </div>
           )}
         </div>
       )}

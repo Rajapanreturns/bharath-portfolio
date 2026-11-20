@@ -40,10 +40,10 @@ The command menu supports search, arrow-key navigation, Enter, and Escape. Secti
 
 ## Assets
 
-- `public/images/neon-world.webp`: original AI-generated pixel landscape from the approved Neon remix prototype; optimized to approximately 381 KB. Decorative artwork, not a project screenshot.
+- `public/images/neon-world.webp`: pixel-art landscape from the Neon remix prototype, updated with a satellite observatory for Fire Record Atlas.
 - `public/fonts/`: locally served DM Sans and Pixelify Sans font files, carried over from the approved prototype.
 - `stayontrail-home.png` and `stayontrail-forest.png`: actual app images from the public [StayOnTrail poster](https://github.com/Rajapanreturns/StayOnTrail/blob/main/Stay%20On%20Trail%20Poster.pdf).
-- `solar-collector.png`: collector design from the public [Heat-Exchanger presentation](https://github.com/Rajapanreturns/Heat-Exchanger/blob/main/Solar%20Oven/PPT.pdf).
+- `fire-record-atlas.png`: screenshot from the [Fire Record Atlas repository](https://github.com/Rajapanreturns/fire-record-atlas/blob/main/docs/atlas-home.png).
 - The DAS workflow is an original illustrative interface with fictional example content, not an actual assessment result.
 - The Survivor diagram, pixel garden, route paths, and favicon are local SVG/CSS artwork.
 
@@ -51,4 +51,4 @@ The command menu supports search, arrow-key navigation, Enter, and Escape. Secti
 
 No new runtime dependencies were added. Lint and production build pass.
 
-The production preview was checked in the browser at 320, 390, 768 pixels and desktop width. No horizontal page overflow, broken project images, console warnings, or console errors were observed. Checks covered section anchors, mobile menu dismissal, command search and Enter selection, project dialogs and Escape focus restoration, the DAS review workflow, original StayOnTrail and solar images, the pixel garden, and the motion toggle. Survivor has no repository link or playable game.
+The production preview was checked in the browser at 320, 390, 768 pixels and desktop width. No horizontal page overflow, broken project images, console warnings, or console errors were observed. Checks covered section anchors, mobile menu dismissal, command search and Enter selection, project dialogs and Escape focus restoration, the DAS review workflow, project images, the pixel garden, and the motion toggle. Survivor has no repository link or playable game.

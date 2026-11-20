@@ -4,7 +4,7 @@ const PROJECT_NAMES = [
   "DAS — Dyslexia assessment tool",
   "StayOnTrail — Android task planner",
   "Survivor — FPGA arcade game",
-  "Solar-powered food dehydrator",
+  "Fire Record Atlas — NASA Space Apps Challenge",
 ];
 
 export default function CommandMenu({
